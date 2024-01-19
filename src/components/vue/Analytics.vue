@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onUnmounted } from 'vue'
 import { io } from 'socket.io-client'
 import EyeIcon from './icons/Eye.vue'
 import HeartIcon from './icons/Heart.vue'
@@ -8,7 +8,6 @@ import UserIcon from './icons/User.vue'
 import { SERVER_PATH } from '../../utils/constants'
 import type { AnalyticsData, SocketData } from '../../types' 
   
-const count = ref(0)
 const analytics = ref({
   views: 1,
   likes: 0,
@@ -57,9 +56,6 @@ function handleLiked() {
 </script>
 
 <template>
-  <h1>{{ count }}</h1>
-  <button @click="count++">Addition</button>
-
   <ul class="flex gap-x-4">
     <li class="flex gap-x-1 items-center">
       <EyeIcon />
