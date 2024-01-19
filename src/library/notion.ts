@@ -1,12 +1,13 @@
 import { Client } from '@notionhq/client'
-import type { ProjectData, TextData, SkillNotion } from '../types'
+import type { TextData, SkillData, ProjectData } from '../types'
 
 const DATABASE_IDS = {
   TEXTOS: 'f3edab349ad548a29d66d6214ab0d2d0',
+  SKILLS: '8b69fd4728ea47009da48b5c6543f930',
   PROJECTS: '5eec4776e06640adbf8188b730c13297'
 }
 
-const NotionClient = new Client({auth: import.meta.env.NOTION_TOKEN})
+export const NotionClient = new Client({auth: import.meta.env.NOTION_TOKEN})
 
 interface PropertyData {
   type: string;
@@ -15,9 +16,7 @@ interface PropertyData {
 
 function propertyUtils(properties: any) {
   return {
-    getValue (data: PropertyData | string): any {
-      if (!data) return
-      
+    getValue <T = any> (data: PropertyData | string): T {
       let property = data as PropertyData | undefined
       if (typeof data == 'string') {
         property = properties?.[data]
@@ -82,6 +81,24 @@ export async function getTexts({filterBy}: {filterBy?: string} = {}): Promise<Te
   })
 }
 
+async function getSkills(): Promise<SkillData[]> {
+  const { results } = await NotionClient.databases.query({
+    database_id: DATABASE_IDS.SKILLS
+  })
+
+  return results.map((projectData: any) => {
+    const { getValue } = propertyUtils(projectData.properties)
+
+    return {
+      id: projectData.id,
+      name: getValue('name')?.[0].plain_text,
+      icon: getValue(projectData.icon)
+    }
+  })
+}
+
+export const SKILLS = await getSkills()
+
 export async function getProjects(): Promise<ProjectData[]> {
   const { results } = await NotionClient.databases.query({
     database_id: DATABASE_IDS.PROJECTS,
@@ -99,6 +116,7 @@ export async function getProjects(): Promise<ProjectData[]> {
     ]
   })
 
+  // return results
   return results.map((projectData: any) => {
     const { getValue } = propertyUtils(projectData.properties)
   
@@ -110,7 +128,7 @@ export async function getProjects(): Promise<ProjectData[]> {
       position: getValue('position'),
       repository: getValue('repository'),
       page: getValue('page'),
-      technologies: getValue('technologies'),
+      skills: SKILLS.filter(s => getValue<{id: string}[]>('skills').some((sm) => sm.id == s.id)),
       screenshots: getValue('screenshots')?.map(getValue),
       state: getValue('state')?.name,
       title: transformMessageData(getValue('title')),
