@@ -28,3 +28,50 @@ export interface AnalyticsEventsProps {
   id?: string
   browserID: string
 }
+
+export interface MessageData {
+  link: string | null
+  content: string
+  annotations: {
+    bold: boolean
+    italic: boolean
+    strikethrough: boolean
+    underline: boolean
+    code: boolean
+    color: string
+  }
+}
+
+export interface TextData {
+  id: string
+  createdAt: string
+  updatedAt: string
+  icon: string | null
+  title: MessageData[]
+  content: MessageData[]
+}
+
+interface ImageUrlData {
+  url: string
+  expiry_time: string
+}
+
+export interface SkillData {
+  id: string
+  name: NotionTextData[]
+  icon: ImageUrlData
+}
+
+export interface ProjectData {
+  id: string
+  page: string
+  state: 'Done' | 'In progress' | 'Not started'
+  title: MessageData[]
+  skills: SkillData[]
+  createdAt: string
+  updatedAt: string
+  position: number
+  repository: string
+  description: MessageData[]
+  screenshots: ImageUrlData[]
+}
