@@ -1,6 +1,6 @@
 ---
-import { PROJECTS } from '../../library/notion'
-import Layout from '../../layouts/Layout.astro'
+import { PROJECTS } from '@/library/notion'
+import Layout from '@/layouts/Layout.astro'
 
 export function getStaticPaths() {
   return PROJECTS.map(p => ({params: {id: p.id}}))

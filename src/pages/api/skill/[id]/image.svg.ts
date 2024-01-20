@@ -1,5 +1,5 @@
 import type { APIContext } from 'astro'
-import { SKILLS } from '../../../../library/notion'
+import { SKILLS } from '@/library/notion'
 
 export async function GET ({ params }: APIContext) {
   const { id } = params

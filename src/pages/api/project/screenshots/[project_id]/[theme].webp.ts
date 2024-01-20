@@ -1,5 +1,5 @@
 import type { APIContext } from 'astro'
-import { PROJECTS } from '../../../../../library/notion'
+import { PROJECTS } from '@/library/notion'
 
 export async function GET ({ params, request }: APIContext) {
   const { project_id: projectId, theme } = params

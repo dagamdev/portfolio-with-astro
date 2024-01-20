@@ -5,8 +5,8 @@ import EyeIcon from './icons/Eye.vue'
 import HeartIcon from './icons/Heart.vue'
 import HeartFilledIcon from './icons/HeartFilled.vue'
 import UserIcon from './icons/User.vue'
-import { SERVER_PATH } from '../../utils/constants'
-import type { AnalyticsData, SocketData } from '../../types' 
+import { SERVER_PATH } from '@/utils/constants'
+import type { AnalyticsData, SocketData } from '@/types' 
   
 const analytics = ref({
   views: 1,

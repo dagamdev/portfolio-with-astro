@@ -1,5 +1,5 @@
 import { Client } from '@notionhq/client'
-import type { TextData, SkillData, ProjectData } from '../types'
+import type { TextData, SkillData, ProjectData } from '@/types'
 
 const DATABASE_IDS = {
   TEXTOS: 'f3edab349ad548a29d66d6214ab0d2d0',
