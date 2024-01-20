@@ -1,6 +1,7 @@
 ---
 import { PROJECTS } from '../../library/notion'
 import Layout from '../../layouts/Layout.astro'
+
 export function getStaticPaths() {
   return PROJECTS.map(p => ({params: {id: p.id}}))
 }
@@ -13,7 +14,7 @@ const project = PROJECTS.find(p => p.id == id)
 <Layout title='David Garcia | Proyectos' description='Desarrollador Web'>
   <main>
     <img src={`/api/project/screenshots/${project?.id}/light.webp`} alt="asd">
-    <h1>{project?.title[0].content}</h1>
+    <h1>{project?.title?.[0].content}</h1>
     <p>{project?.description[0].content}</p>
   </main>
 </Layout>

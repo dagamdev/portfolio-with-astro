@@ -7,32 +7,9 @@ const DATABASE_IDS = {
   PROJECTS: '5eec4776e06640adbf8188b730c13297'
 }
 
-export const NotionClient = new Client({auth: import.meta.env.NOTION_TOKEN})
+export const NotionClient = new Client({ auth: import.meta.env.NOTION_TOKEN })
 
-interface PropertyData {
-  type: string;
-  [key: string]: PropertyData | any;
-}
-
-function propertyUtils(properties: any) {
-  return {
-    getValue <T = any> (data: PropertyData | string): T {
-      let property = data as PropertyData | undefined
-      if (typeof data == 'string') {
-        property = properties?.[data]
-      }
-  
-      const value = property?.[property?.type]
-      if (value?.type) {
-        return this.getValue(value)
-      }
-  
-      return value
-    }
-  }
-}
-
-function transformMessageData(messageData: {
+interface NotionTextData {
   type: string
   text: {
     content: string
@@ -46,9 +23,42 @@ function transformMessageData(messageData: {
     code: boolean
     color: string
   }
-  plain_text: string 
+  plain_text: string
   href: string | null
-}[]) {
+}
+
+interface PropertyData {
+  type: string
+  [key: string]: PropertyData | any
+}
+
+function propertyUtils (properties: any) {
+  function getValue <T = any> (data: PropertyData | string | null): T | null {
+    if (data === null) return null
+
+    let property = data as PropertyData | null
+
+    if (typeof data === 'string') {
+      property = properties[data] ?? null
+    }
+
+    const value = property?.[property.type]
+
+    if (value?.type === undefined) {
+      return value ?? null
+    }
+
+    return getValue(value as PropertyData)
+  }
+
+  return {
+    getValue
+  }
+}
+
+function transformMessageData (messageData: NotionTextData[] | null) {
+  if (messageData === null) return []
+
   return messageData.map(m => ({
     link: m.href,
     content: m.text.content,
@@ -56,15 +66,19 @@ function transformMessageData(messageData: {
   }))
 }
 
-export async function getTexts({filterBy}: {filterBy?: string} = {}): Promise<TextData[]> {
+export async function getTexts ({ filterBy }: { filterBy?: string } = {}): Promise<TextData[]> {
   const { results } = await NotionClient.databases.query({
     database_id: DATABASE_IDS.TEXTOS,
-    filter: (filterBy ? ({
-      property: 'type',
-      select: {
-        equals: filterBy
-      }
-    }) : undefined),
+    filter: (filterBy === undefined
+      ? undefined
+      : (
+          {
+            property: 'type',
+            select: {
+              equals: filterBy
+            }
+          }
+        ))
   })
 
   return results.map((projectData: any) => {
@@ -74,14 +88,14 @@ export async function getTexts({filterBy}: {filterBy?: string} = {}): Promise<Te
       id: projectData.id,
       createdAt: projectData.created_time,
       updatedAt: projectData.last_edited_time,
-      icon: getValue(projectData.icon),
-      title: transformMessageData(getValue('title')),
+      icon: getValue(projectData.icon as PropertyData),
+      title: transformMessageData(getValue<NotionTextData[]>('title')),
       content: transformMessageData(getValue('content'))
     }
   })
 }
 
-async function getSkills(): Promise<SkillData[]> {
+async function getSkills (): Promise<SkillData[]> {
   const { results } = await NotionClient.databases.query({
     database_id: DATABASE_IDS.SKILLS
   })
@@ -92,14 +106,14 @@ async function getSkills(): Promise<SkillData[]> {
     return {
       id: projectData.id,
       name: getValue('name')?.[0].plain_text,
-      icon: getValue(projectData.icon)
+      icon: getValue(projectData.icon as PropertyData)
     }
   })
 }
 
 export const SKILLS = await getSkills()
 
-export async function getProjects(): Promise<ProjectData[]> {
+export async function getProjects (): Promise<ProjectData[]> {
   const { results } = await NotionClient.databases.query({
     database_id: DATABASE_IDS.PROJECTS,
     filter: {
@@ -119,16 +133,18 @@ export async function getProjects(): Promise<ProjectData[]> {
   // return results
   return results.map((projectData: any) => {
     const { getValue } = propertyUtils(projectData.properties)
-  
+
     return {
       id: projectData.id,
-      icon: getValue(projectData.icon),
+      icon: getValue(projectData.icon as PropertyData),
       createdAt: getValue('createdAt')?.start,
       updatedAt: getValue('updatedAt')?.start,
       position: getValue('position'),
       repository: getValue('repository'),
       page: getValue('page'),
-      skills: SKILLS.filter(s => getValue<{id: string}[]>('skills').some((sm) => sm.id == s.id)),
+      skills: SKILLS.filter(s => getValue<Array<{
+        id: string
+      }>>('skills')?.some((sm) => sm.id === s.id)),
       screenshots: getValue('screenshots')?.map(getValue),
       state: getValue('state')?.name,
       title: transformMessageData(getValue('title')),

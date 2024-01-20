@@ -14,7 +14,7 @@ const { project } = Astro.props
     alt={`Screenshot de ${project.title}`}
   >
   <section class="p-3">
-    <h3 class="mb-2 text-xl font-semibold text-gray-400">{project.title[0].content}</h3>
+    <h3 class="mb-2 text-xl font-semibold text-gray-400">{project.title?.[0].content}</h3>
     <p class="mb-4 text-pretty">{project.description[0].content}</p>
   </section>
 </a>

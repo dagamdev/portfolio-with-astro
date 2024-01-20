@@ -1,4 +1,4 @@
-import { Socket } from 'socket.io-client'
+import { type Socket } from 'socket.io-client'
 
 interface ServerToClientEvents {
   analytics: (analytics: AnalyticData) => void
@@ -17,11 +17,11 @@ export interface AnalyticsData {
   views: number
   likes: number
   origin: string
-  browsers: {
+  browsers: Array<{
     id: string
     liked: boolean
     lastVisitAt: number
-  }[]
+  }>
 }
 
 export interface AnalyticsEventsProps {
@@ -59,19 +59,19 @@ interface ImageUrlData {
 export interface SkillData {
   id: string
   name: NotionTextData[]
-  icon: ImageUrlData
+  icon: ImageUrlData | null
 }
 
 export interface ProjectData {
   id: string
-  page: string
+  page: string | null
   state: 'Done' | 'In progress' | 'Not started'
-  title: MessageData[]
-  skills: SkillData[]
+  title: MessageData[] | null
+  skills: SkillData[] | null
   createdAt: string
   updatedAt: string
-  position: number
-  repository: string
+  position: number | null
+  repository: string | null
   description: MessageData[]
   screenshots: ImageUrlData[]
 }
