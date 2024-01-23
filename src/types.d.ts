@@ -48,7 +48,7 @@ export interface TextData {
   updatedAt: string
   icon: string | null
   title: MessageData[]
-  content: MessageData[]
+  text: MessageData[]
 }
 
 interface ImageUrlData {
