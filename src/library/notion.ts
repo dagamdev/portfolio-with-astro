@@ -90,7 +90,7 @@ export async function getTexts ({ filterBy }: { filterBy?: string } = {}): Promi
       updatedAt: projectData.last_edited_time,
       icon: getValue(projectData.icon as PropertyData),
       title: transformMessageData(getValue<NotionTextData[]>('title')),
-      content: transformMessageData(getValue('content'))
+      text: transformMessageData(getValue('text'))
     }
   })
 }
