@@ -1,0 +1,85 @@
+---
+import type { TextData } from '@/types'
+import ContentRender from './ContentRender.astro'
+import { boolean } from 'astro/zod'
+
+interface Props {
+  textData: TextData['text']
+  TagName?: 'p' | 'h1' | 'h2' | 'h3' | 'h4'
+}
+
+const { textData, TagName = 'p' } = Astro.props
+// console.log(textData.text)
+
+let html = ''
+const controllers = {
+  bold: {
+    open: false,
+    tag: 'strong'
+  },
+  italic: {
+    open: false,
+    tag: 'em'
+  }, 
+  strikethrough: {
+    open: false,
+    tag: 's'
+  },
+  underline: {
+    open: false,
+    tag: 'u'
+  },
+  color: {
+    open: false,
+    tag: 'span'
+  }
+}
+
+console.log(textData)
+textData.forEach((message, i, array, previous = array[i-1], next = array[i+1]) => {
+  const { bold, italic, underline, strikethrough, color } = message.annotations 
+  const isLink = message.link !== null
+
+  const preBold = previous?.annotations.bold
+  const preItalic = previous?.annotations.italic
+  const preUnderline = previous?.annotations.underline
+  const preStrikethrough = previous?.annotations.strikethrough
+  const preColor = 'default'
+
+  // if (isLink && (previous === undefined ? true : previous.link)) html += `<a href='${message.link}'>`
+  if (bold && !preBold) html += '<strong>'
+  if (italic && !preItalic) html += '<em>'
+  if (underline && !preUnderline) html += '<u>'
+  if (strikethrough && !preStrikethrough) html += '<s>'
+
+
+  html += message.content
+
+  if (next === undefined) {
+    if (strikethrough) html += '</s>'
+    if (underline) html += '</u>'
+    if (italic) html += '</em>'
+    if (bold) html += `</strong>`
+    // if (isLink) html += `</a>`
+  } else {
+    const { 
+      bold: nextBold,
+      italic: nextItalic,
+      underline: nextUnderline,
+      strikethrough: nextStrikethrough,
+      color: nextColor
+    } = next.annotations
+
+    if (strikethrough && !nextStrikethrough) html += '</s>'
+    if (underline && !nextUnderline) html += '</u>'
+    if (italic && !nextItalic) html += '</em>'
+    if (bold && !nextBold) html += `</strong>`
+    // if (isLink && next.link === null) html += `</a>`
+  }
+})
+console.log(html)
+---
+
+<TagName set:html={html} class="text-pretty whitespace-pre-wrap">
+  <!-- {textData.text.map(t => <ContentRender messageData={t} />)} -->
+</TagName>
