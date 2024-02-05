@@ -35,7 +35,7 @@ const controllers = {
   }
 }
 
-console.log(textData)
+// console.log(textData)
 textData.forEach((message, i, array, previous = array[i-1], next = array[i+1]) => {
   const { bold, italic, underline, strikethrough, color } = message.annotations 
   const isLink = message.link !== null
@@ -77,9 +77,9 @@ textData.forEach((message, i, array, previous = array[i-1], next = array[i+1]) =
     // if (isLink && next.link === null) html += `</a>`
   }
 })
-console.log(html)
+// console.log(html)
 ---
 
-<TagName set:html={html} class="text-pretty whitespace-pre-wrap">
+<TagName set:html={html} class="text-balance whitespace-pre-wrap">
   <!-- {textData.text.map(t => <ContentRender messageData={t} />)} -->
 </TagName>
