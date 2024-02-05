@@ -1,18 +1,18 @@
 export const NAVIGATION_PATHS = [
   {
-    name: 'Home',
+    name: 'Inicio',
     path: '#top'
   },
   {
-    name: 'About',
-    path: '#about'
-  },
-  {
-    name: 'Projects',
+    name: 'Proyectos',
     path: '#projects'
   },
   {
-    name: 'Contact',
+    name: 'Sobre mí',
+    path: '#about'
+  },
+  {
+    name: 'Contacto',
     path: '#contact'
   }
 ] as const
