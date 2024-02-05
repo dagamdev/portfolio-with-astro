@@ -46,8 +46,10 @@ onUnmounted(() => {
 
 function handleLiked() {
   if (analytics.value.liked) {
+    analytics.value.likes--
     socket.emit('removeLike', { browserID })
   } else {
+    analytics.value.likes++
     socket.emit('addLike', { browserID })
   }
 
@@ -56,7 +58,7 @@ function handleLiked() {
 </script>
 
 <template>
-  <ul class="flex gap-x-4">
+  <ul class="flex items-center justify-center gap-x-4 mx-auto text-gray-600 dark:text-gray-300">
     <li class="flex gap-x-1 items-center">
       <EyeIcon />
       <strong>{{ analytics.views }}</strong>
