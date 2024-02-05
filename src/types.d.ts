@@ -66,8 +66,8 @@ export interface ProjectData {
   id: string
   page: string | null
   state: 'Done' | 'In progress' | 'Not started'
-  title: MessageData[] | null
-  skills: SkillData[] | null
+  title: MessageData[]
+  skills: SkillData[]
   createdAt: string
   updatedAt: string
   position: number | null
