@@ -2,13 +2,14 @@
 import Layout from '@/layouts/Layout.astro'
 import SectionContainer from '@/components/SectionContainer.astro'
 import Badge from '@/components/Badge.astro'
-import SocialPill from '@/components/SocialPill.astro'
+import LinkPill from '@/components/LinkPill.astro'
 import LinkedInIcon from '@/icons/LinkedIn.astro'
 import GitHubIcon from '@/icons/GitHub.astro'
 import MailIcon from '@/icons/Mail.astro'
 import CodeIcon from '@/icons/Code.astro'
 import UserIcon from '@/icons/User.astro'
 import ProjectCard from '@/components/ProjectCard.astro'
+import TextRender from '@/components/TextRender.astro'
 import { PROJECTS, getTexts } from '@/library/notion'
 import '@/library/notion'
 
@@ -30,7 +31,7 @@ const SOCIAL_LINKS = [
 	},
 ]
 
-const abotMe = await getTexts({filterBy: 'about'})
+const abotMe = (await getTexts({filterBy: 'about'}))[0]
 ---
 
 <Layout 
@@ -39,41 +40,41 @@ const abotMe = await getTexts({filterBy: 'about'})
 >
 	<main class="px-5">
 		<SectionContainer class="my-40">
-			<h1 class="flex items-center mb-4 md:mb-7 lg:mb-10 text-white text-2xl md:text-3xl lg:text-5xl font-bold flex-row gap-x-4"
+			<h1 class="flex items-center mb-4 md:mb-7 lg:mb-10 text-2xl md:text-3xl lg:text-5xl font-bold flex-row gap-x-4"
 			>Hola, soy David <a href={SOCIAL_LINKS[0].path} target="_blank"><Badge>Disponible</Badge></a></h1>
 			<h2
 				class="text-2xl text-opacity-80 text-balance"
 			>
 				<span>+2 años de experiencia. </span>
-				<span class="text-blue-200">Desarrollador Web Full-Stack.</span>
-				<span class="text-green-200"> De Jalisco, Mexico.</span>
-				Especializado en crear aplicaciones con <span class="text-yellow-200">JavaScript</span> y <span class="text-blue-300">TypeScript</span>.
+				<span class="text-sky-600 dark:text-sky-200">Desarrollador Web Full-Stack.</span>
+				<span class="text-green-600 dark:text-green-200"> De Jalisco, Mexico.</span>
+				Especializado en crear aplicaciones con <span class="text-yellow-600 dark:text-yellow-200">JavaScript</span> y <span class="text-blue-600 dark:text-blue-200">TypeScript</span>.
 			</h2>
 	
 			<nav class="flex flex-wrap gap-5 md:gap-6 mt-10">
-				{SOCIAL_LINKS.map(link => <SocialPill href={link.path}>
+				{SOCIAL_LINKS.map(link => <LinkPill href={link.path}>
 					<link.icon class="size-4 md:size-5 lg:size-6" />
 					{link.name}
-				</SocialPill>)}
+				</LinkPill>)}
 			</nav>
 		</SectionContainer>
 
-		<SectionContainer data={{
-			icon: UserIcon,
-			title: 'Sobre mí'
-		}}>
-			<p>{abotMe[0].content[0].content}</p>
-		</SectionContainer>
-
-		<img class="size-20 mx-auto" src="/api/skill/ae696695-f483-41e2-9218-cae56d15a122/image.svg" alt="svg">
+		<img class="size-20 mx-auto" src="/api/skill/e5466d55-d61b-414f-9f85-e0f2ebbf37d8/image.svg" alt="svg">
 
 		<SectionContainer id="projects" data={{
 			icon: CodeIcon,
 			title: 'Proyectos'
 		}}>
 			<ul class="flex gap-4 flex-wrap ml-10">
-				{PROJECTS.map(p => <ProjectCard project={p} />)}
+				{PROJECTS.map(p => <ProjectCard styleType='lg' project={p} />)}
 			</ul>
+		</SectionContainer>
+
+		<SectionContainer id='about' data={{
+			icon: UserIcon,
+			title: 'Sobre mí'
+		}}>
+			<TextRender textData={abotMe.text}   />
 		</SectionContainer>
 	</main>
 </Layout>
