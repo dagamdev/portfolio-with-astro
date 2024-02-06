@@ -59,13 +59,11 @@ const abotMe = (await getTexts({filterBy: 'about'}))[0]
 			</nav>
 		</SectionContainer>
 
-		<img class="size-20 mx-auto" src="/api/skill/e5466d55-d61b-414f-9f85-e0f2ebbf37d8/image.svg" alt="svg">
-
 		<SectionContainer id="projects" data={{
 			icon: CodeIcon,
 			title: 'Proyectos'
 		}}>
-			<ul class="flex gap-4 flex-wrap ml-10">
+			<ul class="flex gap-4 flex-wrap sm:mx-10">
 				{PROJECTS.map(p => <ProjectCard styleType='lg' project={p} />)}
 			</ul>
 		</SectionContainer>
@@ -74,7 +72,7 @@ const abotMe = (await getTexts({filterBy: 'about'}))[0]
 			icon: UserIcon,
 			title: 'Sobre mí'
 		}}>
-			<TextRender textData={abotMe.text}   />
+			<TextRender class='whitespace-pre-wrap text-balance' textData={abotMe.text}   />
 		</SectionContainer>
 	</main>
 </Layout>
