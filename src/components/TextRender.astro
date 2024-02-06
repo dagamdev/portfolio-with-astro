@@ -1,11 +1,11 @@
 ---
 import type { TextData } from '@/types'
-import ContentRender from './ContentRender.astro'
-import { boolean } from 'astro/zod'
+
 
 interface Props {
   textData: TextData['text']
   TagName?: 'p' | 'h1' | 'h2' | 'h3' | 'h4'
+  class?: string
 }
 
 const { textData, TagName = 'p' } = Astro.props
@@ -80,6 +80,6 @@ textData.forEach((message, i, array, previous = array[i-1], next = array[i+1]) =
 // console.log(html)
 ---
 
-<TagName set:html={html} class="text-balance whitespace-pre-wrap">
+<TagName {...Astro.props} set:html={html}>
   <!-- {textData.text.map(t => <ContentRender messageData={t} />)} -->
 </TagName>
