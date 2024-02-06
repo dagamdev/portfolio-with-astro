@@ -106,7 +106,8 @@ async function getSkills (): Promise<SkillData[]> {
     return {
       id: projectData.id,
       name: getValue('name')?.[0].plain_text,
-      icon: getValue(projectData.icon as PropertyData)
+      icon: getValue(projectData.icon as PropertyData),
+      color: getValue('color')?.name
     }
   })
 }

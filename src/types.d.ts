@@ -58,8 +58,9 @@ interface ImageUrlData {
 
 export interface SkillData {
   id: string
-  name: NotionTextData[]
+  name: string
   icon: ImageUrlData | null
+  color?: string
 }
 
 export interface ProjectData {
