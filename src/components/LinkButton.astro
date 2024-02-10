@@ -1,0 +1,14 @@
+---
+interface Props {
+  href: string
+  className?: string
+}
+
+const { href, className = '' } = Astro.props
+---
+
+<a href={href} target="_blank"
+  class={`flex gap-x-2 py-1.5 px-2 sm:py-2 sm:px-3 text-sm sm:text-base justify-center items-center rounded-md transition hover:scale-105 ${className}`}
+>
+  <slot />
+</a>

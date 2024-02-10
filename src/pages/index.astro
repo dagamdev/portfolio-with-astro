@@ -3,11 +3,13 @@ import Layout from '@/layouts/Layout.astro'
 import SectionContainer from '@/components/SectionContainer.astro'
 import Badge from '@/components/Badge.astro'
 import LinkPill from '@/components/LinkPill.astro'
+import LinkButton from '@/components/LinkButton.astro'
 import LinkedInIcon from '@/icons/LinkedIn.astro'
 import GitHubIcon from '@/icons/GitHub.astro'
 import MailIcon from '@/icons/Mail.astro'
 import CodeIcon from '@/icons/Code.astro'
 import UserIcon from '@/icons/User.astro'
+import DownloadIcon from '@/icons/Download.astro'
 import ProjectCard from '@/components/ProjectCard.astro'
 import TextRender from '@/components/TextRender.astro'
 import { PROJECTS, getTexts } from '@/library/notion'
@@ -42,6 +44,7 @@ const abotMe = (await getTexts({filterBy: 'about'}))[0]
 		<SectionContainer class="my-40">
 			<h1 class="flex items-center mb-4 md:mb-7 lg:mb-10 text-2xl md:text-3xl lg:text-5xl font-bold flex-row gap-x-4"
 			>Hola, soy David <a href={SOCIAL_LINKS[0].path} target="_blank"><Badge>Disponible</Badge></a></h1>
+			
 			<h2
 				class="text-2xl text-opacity-80 text-balance"
 			>
@@ -51,11 +54,20 @@ const abotMe = (await getTexts({filterBy: 'about'}))[0]
 				Especializado en crear aplicaciones con <span class="text-yellow-600 dark:text-yellow-200">JavaScript</span> y <span class="text-blue-600 dark:text-blue-200">TypeScript</span>.
 			</h2>
 	
-			<nav class="flex flex-wrap gap-5 md:gap-6 mt-10">
-				{SOCIAL_LINKS.map(link => <LinkPill href={link.path}>
-					<link.icon class="size-4 md:size-5 lg:size-6" />
+			<nav class="flex flex-wrap gap-5 md:gap-6 mt-6 sm:mt-10">
+				{SOCIAL_LINKS.map((link) => <LinkPill href={link.path}>
+					<link.icon class={"size-4 md:size-5 lg:size-6"} />
 					{link.name}
 				</LinkPill>)}
+			</nav>
+
+			<nav class="flex mt-6 sm:mt-10">
+				<LinkButton
+					className='text-gray-100 bg-sky-500 dark:bg-sky-700'
+					href='https://drive.google.com/file/d/1OniVCxE44zXTnEEajuKaQ1OLoEfI3qnk/view?usp=drive_link'
+				>
+					<DownloadIcon /> Descargar CV
+				</LinkButton>
 			</nav>
 		</SectionContainer>
 
@@ -63,7 +75,7 @@ const abotMe = (await getTexts({filterBy: 'about'}))[0]
 			icon: CodeIcon,
 			title: 'Proyectos'
 		}}>
-			<ul class="flex gap-4 flex-wrap sm:mx-10">
+			<ul class="space-y-20 sm:mx-10">
 				{PROJECTS.map(p => <ProjectCard styleType='lg' project={p} />)}
 			</ul>
 		</SectionContainer>
