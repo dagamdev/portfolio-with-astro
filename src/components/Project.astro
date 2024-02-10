@@ -1,0 +1,66 @@
+---
+import { ProjectData } from '@/types'
+import TextRender from './TextRender.astro'
+import LinkButton from './LinkButton.astro'
+import LinkIcon from '@/icons/Link.astro'
+import GitHubIcon from '@/icons/GitHub.astro'
+
+interface Props {
+  project: ProjectData
+  fullDescription?: boolean
+}
+const { project, fullDescription = false } = Astro.props
+---
+
+<article class="w-full space-y-4">
+  <img 
+    class="rounded-lg border shadow-lg dark:border-gray-600 dark:shadow-gray-600/30"
+    src={`/api/project/screenshots/${project.id}/dark.webp`} 
+    alt={`Screenshot de ${project.title?.[0].content}`}
+  >
+  <TextRender class="text-2xl font-bold text-slate-600 dark:text-slate-200" textData={project.title} />
+  <ul class="flex gap-4 flex-wrap">
+    {project.skills.map(sk => <li style={sk.color && `background-color: ${sk.color}20; border-color: ${sk.color}60`}
+      class={`flex gap-x-1.5 items-center px-3 py-1.5 text-sm rounded-full border ` + (sk.color === undefined
+        ? 'border-gray-400/80 bg-gray-300/20 dark:border-gray-500/80 dark:bg-gray-400/20'
+        : ``
+      )}
+    >
+      <img class="size-5" src={`/api/skill/${sk.id}/image.svg`} alt={`Skill de ${sk.name}`}>
+      <span>{sk.name}</span>
+    </li>
+    )}  
+  </ul>
+  <TextRender class={`${fullDescription ? '' : 'limit '}paragraph whitespace-pre-wrap text-balance`} textData={project.description} />
+  <nav class="flex gap-6">
+    {project.page && <LinkButton
+      className='sm:py-1.5 sm:px-2 sm:text-sm'
+        href={project.page}
+      >
+        <LinkIcon />
+        Pagina
+      </LinkButton>
+    }
+    {project.repository && <LinkButton
+      className='sm:py-1.5 sm:px-2 sm:text-sm'
+        href={project.repository}
+      >
+        <GitHubIcon class='size-5' />
+        Respositorio
+      </LinkButton>
+    }
+  </nav>
+</article>
+
+<style>
+  .paragraph {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+  }
+
+  .limit {
+    -webkit-line-clamp: 5;
+  }
+</style>
