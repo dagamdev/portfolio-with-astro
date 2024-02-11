@@ -10,7 +10,7 @@ import MailIcon from '@/icons/Mail.astro'
 import CodeIcon from '@/icons/Code.astro'
 import UserIcon from '@/icons/User.astro'
 import DownloadIcon from '@/icons/Download.astro'
-import ProjectCard from '@/components/ProjectCard.astro'
+import Project from '@/components/Project.astro'
 import TextRender from '@/components/TextRender.astro'
 import { PROJECTS, getTexts } from '@/library/notion'
 import '@/library/notion'
@@ -63,7 +63,7 @@ const abotMe = (await getTexts({filterBy: 'about'}))[0]
 
 			<nav class="flex mt-6 sm:mt-10">
 				<LinkButton
-					className='text-gray-100 bg-sky-500 dark:bg-sky-700'
+					type='main'
 					href='https://drive.google.com/file/d/1OniVCxE44zXTnEEajuKaQ1OLoEfI3qnk/view?usp=drive_link'
 				>
 					<DownloadIcon /> Descargar CV
@@ -76,7 +76,7 @@ const abotMe = (await getTexts({filterBy: 'about'}))[0]
 			title: 'Proyectos'
 		}}>
 			<ul class="space-y-20 sm:mx-10">
-				{PROJECTS.map(p => <ProjectCard styleType='lg' project={p} />)}
+				{PROJECTS.map(p => <Project project={p} />)}
 			</ul>
 		</SectionContainer>
 
@@ -84,7 +84,7 @@ const abotMe = (await getTexts({filterBy: 'about'}))[0]
 			icon: UserIcon,
 			title: 'Sobre mí'
 		}}>
-			<TextRender class='whitespace-pre-wrap text-balance' textData={abotMe.text}   />
+			<TextRender textData={abotMe.text} />
 		</SectionContainer>
 	</main>
 </Layout>
