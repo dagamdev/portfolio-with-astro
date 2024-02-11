@@ -4,10 +4,10 @@ import type { TextData } from '@/types'
 interface Props {
   textData: TextData['text']
   tagName?: 'p' | 'h1' | 'h2' | 'h3' | 'h4'
-  class?: string
+  className?: string
 }
 
-const { textData, tagName = 'p' } = Astro.props
+const { textData, tagName = 'p', className = '' } = Astro.props
 
 let html = ''
 const controllers = {
@@ -39,7 +39,7 @@ const controllers = {
 
 for (const message of textData) {
   if (message.link !== null && !controllers.link.open) {
-    html += `<a href="${message.link}" class='hover:underline text-blue-600 dark:text-blue-200'>`
+    html += `<a href="${message.link}" class='underline hover:no-underline text-blue-500 dark:text-blue-300'>`
     controllers.link.open = true
   } else if (controllers.link.open) {
     html += '</a>'
@@ -82,10 +82,9 @@ for (const [_, value] of Object.entries(controllers)) {
     value.open = false
   }
 }
-console.log(html)
 ---
 
-<Fragment {...Astro.props} set:html={`<${tagName} class="whitespace-pre-wrap text-balance" >${html}</${tagName}>`} />
+<Fragment {...Astro.props} set:html={`<${tagName} class="whitespace-pre-wrap text-balance ${className}" >${html}</${tagName}>`} />
 
 <style is:global>
   .text-red {
@@ -118,31 +117,31 @@ console.log(html)
 
   @media (prefers-color-scheme: dark) {
     .text-red {
-      color: #f87171;
+      color: #fca5a5;
     }
     .text-gray {
-      color: #9ca3af;
+      color: #d1d5db;
     }
     .text-brown {
-      color: #a16207;
+      color: #ca8a04;
     }
     .text-orange {
-      color: #fb923c;
+      color: #fdba74;
     }
     .text-yellow {
-      color: #facc15;
+      color: #fde047;
     }
     .text-green {
-      color: #4ade80;
+      color: #86efac;
     }
     .text-blue {
-      color: #60a5fa;
+      color: #93c5fd;
     }
     .text-purple {
-      color: #c084fc;
+      color: #d8b4fe;
     }
     .text-pink {
-      color: #f472b6;
+      color: #f9a8d4;
     }
   }
 </style>
