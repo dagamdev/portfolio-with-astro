@@ -1,0 +1,16 @@
+---
+import Layout from '@/layouts/Layout.astro'
+import { PROJECTS } from '@/library/notion'
+import ProjectCard from '@/components/ProjectCard.astro'
+import SectionContainer from '@/components/SectionContainer.astro'
+---
+
+<Layout title="David Garcia Desarrollador Web" description=''>
+  <main>
+    <SectionContainer>
+      <ul class="flex flex-wrap gap-4">
+        {PROJECTS.map(p => <ProjectCard project={p} />)}
+      </ul>
+    </SectionContainer>
+  </main>
+</Layout>
