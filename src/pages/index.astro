@@ -37,6 +37,7 @@ const abotMe = (await getTexts({filterBy: 'about'}))[0]
 ---
 
 <Layout 
+	inHome
 	title="David Garcia | Desarrollador Web"
 	description="Desarollador y Programador Web Front-End & Back-End | Contratame para Desarrollar tu app web."
 >
@@ -76,8 +77,16 @@ const abotMe = (await getTexts({filterBy: 'about'}))[0]
 			title: 'Proyectos'
 		}}>
 			<ul class="space-y-20 sm:mx-10">
-				{PROJECTS.map(p => <Project project={p} />)}
+				{PROJECTS.filter(f => f.type === 'main')
+					.map(p => <Project project={p} />)
+				}
 			</ul>
+			<section class="mt-8 text-center">
+				<a
+					class="underline hover:no-underline text-blue-500 dark:text-blue-300"
+					href="/projects"
+				>Más proyectos</a>
+			</section>
 		</SectionContainer>
 
 		<SectionContainer id='about' data={{
