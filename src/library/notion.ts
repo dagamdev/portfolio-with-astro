@@ -131,7 +131,6 @@ export async function getProjects (): Promise<ProjectData[]> {
     ]
   })
 
-  // return results
   return results.map((projectData: any) => {
     const { getValue } = propertyUtils(projectData.properties)
 
@@ -143,6 +142,7 @@ export async function getProjects (): Promise<ProjectData[]> {
       position: getValue('position'),
       repository: getValue('repository'),
       page: getValue('page'),
+      type: getValue('type')?.name ?? 'secondary',
       skills: SKILLS.filter(s => getValue<Array<{
         id: string
       }>>('skills')?.some((sm) => sm.id === s.id)),
