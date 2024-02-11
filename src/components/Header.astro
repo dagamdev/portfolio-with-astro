@@ -1,16 +1,23 @@
 ---
 import { NAVIGATION_PATHS } from '@/utils/constants'
+
+interface Props {
+  inHome?: boolean 
+}
+
+const { inHome } = Astro.props
 ---
 
 <header class='sticky px-5 py-4 top-0 w-full transition duration-300'>
   <div class="flex justify-between items-center mx-auto xl:w-[1200px] w-full">
-    <a href="/">
+    <a href="/" class="flex gap-x-3 items-center">
       <img class='rounded-full size-9 border sm:size-[50px] border-gray-900 dark:border-white' src='/my_profile.jpg' alt='my profile' width='50' height='50'>
+      {inHome === false && <h2 class="text-xl" >David Garcia</h2>}
     </a>
   
-    <nav class="flex flex-row gap-x-4 sm:gap-x-6 md:gap-x-10">
+    {inHome && <nav class="flex flex-row gap-x-4 sm:gap-x-6 md:gap-x-10">
       {NAVIGATION_PATHS.map(n => <a class="hover:underline hover:text-sky-600 dark:hover:text-sky-200" href={n.path}>{n.name}</a>)}
-    </nav>
+    </nav>}
   </div>
 </header>
 
