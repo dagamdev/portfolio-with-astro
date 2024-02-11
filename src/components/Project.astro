@@ -1,5 +1,5 @@
 ---
-import { ProjectData } from '@/types'
+import type { ProjectData } from '@/types'
 import TextRender from './TextRender.astro'
 import LinkButton from './LinkButton.astro'
 import LinkIcon from '@/icons/Link.astro'
@@ -9,16 +9,25 @@ interface Props {
   project: ProjectData
   fullDescription?: boolean
 }
+
 const { project, fullDescription = false } = Astro.props
 ---
 
 <article class="w-full space-y-4">
-  <img 
-    class="rounded-lg border shadow-lg dark:border-gray-600 dark:shadow-gray-600/30"
-    src={`/api/project/screenshots/${project.id}/dark.webp`} 
-    alt={`Screenshot de ${project.title?.[0].content}`}
-  >
-  <TextRender class="text-2xl font-bold text-slate-600 dark:text-slate-200" textData={project.title} />
+  <a href={project.page ?? '/'}>
+    <img 
+      class="rounded-lg border shadow-lg dark:border-gray-600 dark:shadow-gray-600/30"
+      src={`/api/project/screenshots/${project.id}/dark.webp`} 
+      alt={`Screenshot de ${project.title?.[0].content}`}
+    >
+  </a>
+  <a class="block" href={`/projects/${project.id}`}>
+    <TextRender
+      className="text-2xl font-bold text-slate-600 dark:text-slate-400"
+      textData={project.title}
+      tagName="h3"
+    />
+  </a>
   <ul class="flex gap-4 flex-wrap">
     {project.skills.map(sk => <li style={sk.color && `background-color: ${sk.color}20; border-color: ${sk.color}60`}
       class={`flex gap-x-1.5 items-center px-3 py-1.5 text-sm rounded-full border ` + (sk.color === undefined
@@ -31,7 +40,10 @@ const { project, fullDescription = false } = Astro.props
     </li>
     )}  
   </ul>
-  <TextRender class={`${fullDescription ? '' : 'limit '}paragraph whitespace-pre-wrap text-balance`} textData={project.description} />
+  <TextRender
+    className={`${fullDescription ? '' : 'limit '}paragraph whitespace-pre-wrap text-balance`}
+    textData={project.description}
+  />
   <nav class="flex gap-6">
     {project.page && <LinkButton
       className='sm:py-1.5 sm:px-2 sm:text-sm'
@@ -51,16 +63,3 @@ const { project, fullDescription = false } = Astro.props
     }
   </nav>
 </article>
-
-<style>
-  .paragraph {
-    display: -webkit-box;
-    overflow: hidden;
-    -webkit-box-orient: vertical;
-    text-overflow: ellipsis;
-  }
-
-  .limit {
-    -webkit-line-clamp: 5;
-  }
-</style>
