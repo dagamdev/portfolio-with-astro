@@ -5,30 +5,39 @@ import TextRender from './TextRender.astro'
 interface Props {
   project: ProjectData
 }
-const { project} = Astro.props
+const { project } = Astro.props
 ---
 
-<a href={'/project/' + project.id} 
-  class="block rounded-lg max-w-[300px] border border-neutral-600 overflow-hidden shadow-gray-400/10 bg-neutral-900">
+<article
+  class="mt-10 cursor-pointer project-card rounded-lg overflow-hidden max-w-[300px] border border-neutral-400 dark:border-neutral-700 shadow-lg shadow-gray-400/10 bg-gray-400 dark:bg-gray-800/80"
+  data-path={`/projects/${project.id}`}
+>
   <img 
     src={`/api/project/screenshots/${project.id}/dark.webp`} 
-    alt={`Screenshot de ${project.title?.[0].content}`}
+    alt={`Screenshot del proyecto ${project.id}`}
   >
   <section class="p-3">
-    <h3 class="mb-2 text-xl font-semibold text-gray-400">{project.title?.[0].content}</h3>
-    <p class={`limit paragraph mb-4 text-pretty`}>{project.description[0].content}</p>
+    <TextRender
+      tagName='h3'
+      className="mb-2 text-xl font-semibold text-slate-600 dark:text-slate-400"
+      textData={project.title}
+    />
+    <TextRender
+      className="limit paragraph mb-4 text-pretty"
+      textData={project.description}
+    />
   </section>
-</a>
+</article>
 
-<style>
-  .paragraph {
-    display: -webkit-box;
-    overflow: hidden;
-    -webkit-box-orient: vertical;
-    text-overflow: ellipsis;
-  }
-
-  .limit {
-    -webkit-line-clamp: 5;
-  }
-</style>
+<script>
+  document.querySelectorAll('.project-card').forEach(ar => {
+    ar.addEventListener('click', ev => {
+      if (ev.currentTarget instanceof HTMLElement){
+        const path = ev.currentTarget.dataset.path
+        if (path !== undefined) {
+          location.assign(path)
+        }
+      }
+    })
+  })
+</script>
