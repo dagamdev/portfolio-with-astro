@@ -7,27 +7,35 @@ import GitHubIcon from '@/icons/GitHub.astro'
 
 interface Props {
   project: ProjectData
+  projectPath?: boolean
   fullDescription?: boolean
 }
 
-const { project, fullDescription = false } = Astro.props
+const { project, projectPath = false, fullDescription = false } = Astro.props
 ---
 
 <article class="w-full space-y-4">
-  <a href={project.page ?? '/'}>
+  <a href={project.page ?? '/'} target="_blank">
     <img 
       class="rounded-lg border shadow-lg dark:border-gray-600 dark:shadow-gray-600/30"
       src={`/api/project/screenshots/${project.id}/dark.webp`} 
       alt={`Screenshot de ${project.title?.[0].content}`}
     >
   </a>
-  <a class="block" href={`/projects/${project.id}`}>
-    <TextRender
-      className="text-2xl font-bold text-slate-600 dark:text-slate-400"
-      textData={project.title}
-      tagName="h3"
-    />
-  </a>
+  {projectPath
+    ? <a class="block" href={`/projects/${project.id}`} target="_blank">
+        <TextRender
+          className="text-2xl font-bold text-slate-600 dark:text-slate-400"
+          textData={project.title}
+          tagName="h3"
+        />
+      </a>
+    : <TextRender
+        className="text-2xl font-bold text-slate-600 dark:text-slate-400"
+        textData={project.title}
+        tagName="h3"
+      />
+  }
   <ul class="flex gap-4 flex-wrap">
     {project.skills.map(sk => <li style={sk.color && `background-color: ${sk.color}20; border-color: ${sk.color}60`}
       class={`flex gap-x-1.5 items-center px-3 py-1.5 text-sm rounded-full border ` + (sk.color === undefined
