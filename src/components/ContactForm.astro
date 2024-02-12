@@ -1,0 +1,49 @@
+<form class="max-w-md space-y-5">
+  <label for="name" class="space-y-2 block text-sm font-medium">
+    <span>Tu nombre</span>
+    <input
+      type="text"
+      id="name"
+      class="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-900 dark:border-gray-700 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+      required
+    >
+  </label>
+  <label for="email" class="space-y-2 block text-sm font-medium">
+    <span>Tu email</span>
+    <input
+      type="email"
+      id="email"
+      class="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-900 dark:border-gray-700 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+      placeholder="tu-email@gmail.com"
+      required
+    >
+  </label>
+  <label for="message" class="space-y-2 block text-sm font-medium">
+    <span>Tu mensaje</span>
+    <textarea
+      id="message"
+      rows="4"
+      class="block max-h-60 p-2.5 w-full text-sm bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-900 dark:border-gray-700 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+      placeholder="Escribeme tu mensaje..."
+      maxlength="5000"
+    ></textarea>
+  </label>
+  <button
+    type="submit"
+    class="w-full text-gray-100 bg-sky-700 hover:bg-sky-800 focus:ring-4 focus:outline-none focus:ring-sky-300 font-medium rounded-lg text-sm sm:w-auto px-6 py-2.5 text-center dark:bg-sky-600 dark:hover:bg-sky-700 dark:focus:ring-sky-800"
+  >Submit</button>
+</form>
+
+<script>
+  document.querySelector('textarea')?.addEventListener('input', (ev) => {
+    console.log('Textarea change')
+    if (ev.currentTarget instanceof HTMLTextAreaElement) {
+      const { scrollHeight } = ev.currentTarget
+
+      if (scrollHeight < 200) {
+        ev.currentTarget.style.height = 'auto'
+        ev.currentTarget.style.height = ev.currentTarget.scrollHeight + 'px'
+      }
+    }
+  })
+</script>
