@@ -11,7 +11,7 @@ interface Props {
 const { id, className = '', data } = Astro.props
 ---
 
-<section id={id} class={`w-full mx-auto max-w-[740px] my-40 ${className}`}>
+<section id={id} class={`w-full mx-auto max-w-[740px] py-20 ${className}`}>
   {data === undefined
     ?  <slot />
     : <>

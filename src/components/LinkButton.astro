@@ -9,7 +9,7 @@ const { href, className = '', type = 'default' } = Astro.props
 ---
 
 <a href={href} target="_blank"
-  class={`flex gap-x-2 py-1.5 px-2 sm:py-2 sm:px-3 text-sm sm:text-base justify-center items-center rounded-md transition hover:scale-105 ${type === 'main'
+  class={`flex gap-x-2 py-1.5 px-2.5 sm:py-2 sm:px-4 text-sm sm:text-base justify-center items-center rounded-md transition hover:scale-105 ${type === 'main'
     ? 'text-gray-100 bg-sky-500 dark:bg-sky-700'
     : 'bg-gray-400 dark:bg-gray-800'
   } ${className}`}
