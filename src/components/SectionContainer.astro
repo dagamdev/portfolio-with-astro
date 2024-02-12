@@ -1,22 +1,26 @@
 ---
 interface Props {
   id?: string
-  class?: string
+  className?: string
   data?: {
     icon: (_props: Record<string, any>) => any
     title: string
   }
 }
 
-const { id, class: className, data } = Astro.props
+const { id, className = '', data } = Astro.props
 ---
 
-<section id={id} class={`w-full mx-auto max-w-[740px] mb-40 ${className}`}>
-  {data && (
+<section id={id} class={`w-full mx-auto max-w-[740px] my-40 ${className}`}>
+  {data === undefined
+    ?  <slot />
+    : <>
     <h2 class="text-3xl font-semibold mb-6 flex gap-x-3 items-center text-sky-600 dark:text-sky-200">
       <data.icon class="size-7" />
       {data.title}
     </h2>
-  )}
-  <slot />
+    <section class="sm:ml-10">
+      <slot />
+    </section>
+  </>}
 </section>
