@@ -10,8 +10,10 @@ import MailIcon from '@/icons/Mail.astro'
 import CodeIcon from '@/icons/Code.astro'
 import UserIcon from '@/icons/User.astro'
 import DownloadIcon from '@/icons/Download.astro'
+import MailUpIcon from '@/icons/MailUp.astro'
 import Project from '@/components/Project.astro'
 import TextRender from '@/components/TextRender.astro'
+import ContactForm from '@/components/ContactForm.astro'
 import { PROJECTS, getTexts } from '@/library/notion'
 import '@/library/notion'
 
@@ -42,7 +44,7 @@ const abotMe = (await getTexts({filterBy: 'about'}))[0]
 	description="Desarollador y Programador Web Front-End & Back-End | Contratame para Desarrollar tu app web."
 >
 	<main class="px-5">
-		<SectionContainer class="my-40">
+		<SectionContainer>
 			<h1 class="flex items-center mb-4 md:mb-7 lg:mb-10 text-2xl md:text-3xl lg:text-5xl font-bold flex-row gap-x-4"
 			>Hola, soy David <a href={SOCIAL_LINKS[0].path} target="_blank"><Badge>Disponible</Badge></a></h1>
 			
@@ -76,9 +78,9 @@ const abotMe = (await getTexts({filterBy: 'about'}))[0]
 			icon: CodeIcon,
 			title: 'Proyectos'
 		}}>
-			<ul class="space-y-20 sm:mx-10">
+			<ul class="space-y-20">
 				{PROJECTS.filter(f => f.type === 'main')
-					.map(p => <Project project={p} />)
+					.map(p => <Project project={p} projectPath />)
 				}
 			</ul>
 			<section class="mt-8 text-center">
@@ -94,6 +96,13 @@ const abotMe = (await getTexts({filterBy: 'about'}))[0]
 			title: 'Sobre mí'
 		}}>
 			<TextRender textData={abotMe.text} />
+		</SectionContainer>
+
+		<SectionContainer id='contact' data={{
+			icon: MailUpIcon,
+			title: 'Contacto'
+		}}>
+			<ContactForm  />
 		</SectionContainer>
 	</main>
 </Layout>
