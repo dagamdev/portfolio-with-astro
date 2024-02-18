@@ -21,14 +21,28 @@ const { inHome } = Astro.props
   </div>
 </header>
 
-<script>
-  document.addEventListener('scroll', (ev) => {
-    const header = document.querySelector('header')
-    const className = ['backdrop-blur', 'bg-gray-200/10', 'dark:bg-gray-900/10', 'shadow-lg', 'shadow-gray-400/1']
-    if (window.scrollY > 80) {
-      header?.classList.add(...className)
-    } else {
-      header?.classList.remove(...className)
+<style>
+  header {
+    animation: Blur linear both;
+    animation-timeline: scroll();
+    animation-range: 0 500px;
+  }
+
+  @keyframes Blur {
+    to {
+      background-color: rgb(229 231 235 / 0.1);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 14px 10px -3px rgba(121, 125, 133, 0.10);
     }
-  })
-</script>
+  }
+
+  @media (prefers-color-scheme: dark) {
+    @keyframes Blur {
+      to {
+        background-color: rgb(17 24 39 / 0.1);
+        backdrop-filter: blur(8px);
+        box-shadow: 0 14px 10px -3px rgba(18, 18, 19, 0.3);
+      }
+    }
+  }
+</style>
