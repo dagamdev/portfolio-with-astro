@@ -14,7 +14,7 @@ interface Props {
 const { project, projectPath = false, fullDescription = false } = Astro.props
 ---
 
-<li class="w-full space-y-4">
+<article class="space-y-4">
   <a href={project.page ?? '/'} target="_blank">
     <img 
       class="rounded-lg border shadow-lg dark:border-gray-600 dark:shadow-gray-600/30"
@@ -23,7 +23,7 @@ const { project, projectPath = false, fullDescription = false } = Astro.props
     >
   </a>
   {projectPath
-    ? <a class="block" href={`/projects/${project.id}`} target="_blank">
+    ? <a class="block" href={`/projects/${project.id}`}>
         <TextRender
           className="text-2xl font-bold text-slate-600 dark:text-slate-400"
           textData={project.title}
@@ -70,4 +70,4 @@ const { project, projectPath = false, fullDescription = false } = Astro.props
       </LinkButton>
     }
   </nav>
-</li>
+</article>
