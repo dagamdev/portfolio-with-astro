@@ -38,10 +38,8 @@ const SOCIAL_LINKS = [
 const abotMe = (await getTexts({filterBy: 'about'}))[0]
 ---
 
-<Layout 
-	inHome
+<Layout inHome
 	title="David Garcia | Desarrollador Web"
-	description="Desarollador y Programador Web Front-End & Back-End | Contratame para Desarrollar tu app web."
 >
 	<main class="px-5 space-y-40">
 		<SectionContainer>
@@ -80,7 +78,7 @@ const abotMe = (await getTexts({filterBy: 'about'}))[0]
 		}}>
 			<ul class="space-y-20">
 				{PROJECTS.filter(f => f.type === 'main')
-					.map(p => <Project project={p} projectPath />)
+					.map(p => <li><Project project={p} projectPath /></li>)
 				}
 			</ul>
 			<section class="mt-8 text-center">
