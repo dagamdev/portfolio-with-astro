@@ -13,7 +13,7 @@ const { title, description, inHome = false } = Astro.props
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="es">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="description" content={description} />
@@ -21,6 +21,16 @@ const { title, description, inHome = false } = Astro.props
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
+		<meta name="image" content="/my_profile.jpg">
+		<meta name="robots" content="index, follow">
+		<meta name="date" content="2024-01-08">
+		<meta name="theme-color" content="#0ea5e9">
+
+		<meta property="og:title" content={title}>
+		<meta property="og:description" content={description}>
+		<meta property="og:image" content="/my_profile.jpg">
+		<meta property="og:type" content="website">
+		<meta property="og:url" content="https://dagamdev.vercel.app">
 	</head>
 	<body class="text-gray-900 dark:text-white">
 		<div class="absolute top-0 bottom-0 left-0 z-[-2] min-h-screen w-full bg-neutral-100 dark:bg-neutral-950 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]"></div>
