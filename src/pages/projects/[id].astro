@@ -11,9 +11,13 @@ export function getStaticPaths() {
 const { id } = Astro.params
 
 const project = PROJECTS.find(p => p.id == id)
+const description = project?.description.map(d => d.content).join('') ?? 'Proyecto Web desarrollado por David Garcia. Desarrollador Web Full-Stack'
 ---
 
-<Layout title='David Garcia | Proyectos' description='Desarrollador Web'>
+<Layout
+  title=`${project ? project.title.map(t => t.content).join('') :  'Proyecto'} | David Garcia`
+  description={description.slice(0, 160).trimEnd() + '...'}
+>
   <main class="mt-10">
     <SectionContainer>
       {project !== undefined && <Project project={project} fullDescription />}
