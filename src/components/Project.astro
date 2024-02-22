@@ -14,7 +14,7 @@ interface Props {
 const { project, projectPath = false, fullDescription = false } = Astro.props
 ---
 
-<article class="w-full space-y-4">
+<li class="w-full space-y-4">
   <a href={project.page ?? '/'} target="_blank">
     <img 
       class="rounded-lg border shadow-lg dark:border-gray-600 dark:shadow-gray-600/30"
@@ -70,4 +70,4 @@ const { project, projectPath = false, fullDescription = false } = Astro.props
       </LinkButton>
     }
   </nav>
-</article>
+</li>
